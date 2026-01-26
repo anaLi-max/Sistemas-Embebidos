@@ -1,0 +1,31 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2); // Initialize the LCD display
+
+void setup()
+{
+  Serial.begin(9600); // Start the serial communication for debugging
+  lcd.begin(16, 2); // Initialize the LCD display
+  lcd.print("Temperature is");
+  pinMode(A0,INPUT);
+  pinMode(6,OUTPUT);
+}
+
+void loop()
+{
+  
+  float volt = analogRead(A0);
+  volt = volt*4.88;
+  float temperature = volt/10;
+  lcd.setCursor(0,1);
+  lcd.print(temperature);
+  lcd.print(" deg celcius");
+  Serial.print("Temperature is ");
+  Serial.print(temperature);
+  Serial.println(" deg cwlcius");
+  if(temperature>=70)
+    digitalWrite(6,HIGH);
+  else
+    digitalWrite(6,LOW);
+  
+}
